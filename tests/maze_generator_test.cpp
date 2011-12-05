@@ -2,7 +2,7 @@
 #include <QtTest/QtTest>
 
 #include "random_maze_generator.h"
-#include "room_location_t.h"
+#include "location_t.h"
 
 #include <limits>
 

@@ -5,7 +5,7 @@
 
 #include "maze_generator_interface.h"
 #include "maze_generator_lib_global.h"
-#include "room_location_t.h"
+#include "location_t.h"
 
 class maze;
 

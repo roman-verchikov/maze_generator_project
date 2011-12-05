@@ -49,3 +49,9 @@ void MainWindow::on_generateButton_clicked()
 
     this->ui->mazeDrawingWidget->update();
 }
+
+void MainWindow::on_nextStepButton_clicked()
+{
+    ui->mazeDrawingWidget->onNextGenerationStepEvent();
+    this->ui->mazeDrawingWidget->update();
+}

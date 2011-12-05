@@ -70,3 +70,24 @@ void room::location(const location_t &rl)
     location_ = rl;
 }
 
+room& room::operator += (const room& rhs)
+{
+    std::transform(rhs.is_wall_.begin(),
+                   rhs.is_wall_.end(),
+                   is_wall_.begin(),
+                   is_wall_.begin(),
+                   std::logical_or<bool>());
+
+    return *this;
+}
+
+room& room::operator -= (const room& rhs)
+{
+    std::transform(rhs.is_wall_.begin(),
+                   rhs.is_wall_.end(),
+                   is_wall_.begin(),
+                   is_wall_.begin(),
+                   std::logical_and<bool>());
+
+    return *this;
+}

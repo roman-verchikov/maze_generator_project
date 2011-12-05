@@ -15,11 +15,14 @@ maze_drawing_widget::maze_drawing_widget(QWidget *parent) :
 
 void maze_drawing_widget::paintEvent(QPaintEvent *)
 {
-    if (current_maze::get()) {
-        std::for_each(current_maze::get()->rooms_cbegin(),
-                      current_maze::get()->rooms_cend(),
-                      room_drawer(this));
-    }
+    std::for_each(current_maze::get()->current_maze().begin(),
+                  current_maze::get()->current_maze().begin(),
+                  room_drawer(this));
+}
+
+void maze_drawing_widget::onNextGenerationStepEvent()
+{
+    current_maze::get()->next_step();
 }
 
 void maze_drawing_widget::drawStepByStep(bool val)

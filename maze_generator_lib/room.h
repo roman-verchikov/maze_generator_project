@@ -6,7 +6,7 @@
 #include "maze_generator_lib_global.h"
 
 #include "direction_t.h"
-#include "room_location_t.h"
+#include "location_t.h"
 
 class room
 {
@@ -26,6 +26,9 @@ public:
 
     void clear_walls();
     void set_walls();
+
+    room& operator += (const room& rhs);
+    room& operator -= (const room& rhs);
 
 private:
     boost::array<bool, direction_t::NUM_DIRECTIONS> is_wall_;

@@ -17,7 +17,8 @@ SOURCES += current_maze.cpp \
 	maze.cpp \
 	random_maze_generator.cpp \
 	room.cpp \
-	room_location_t.cpp
+    location_t.cpp \
+    change_command.cpp
 
 HEADERS += current_maze.h \
 	dfs_maze_generator.h \
@@ -28,8 +29,9 @@ HEADERS += current_maze.h \
 	maze.h \
 	random_maze_generator.h \
 	room.h \
-	room_location_t.h \
-	vector2d.h
+	vector2d.h \
+    location_t.h \
+    change_command.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

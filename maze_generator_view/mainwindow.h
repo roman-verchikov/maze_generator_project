@@ -22,6 +22,8 @@ private slots:
 
     void on_generateButton_clicked();
 
+    void on_nextStepButton_clicked();
+
 private:
 
     Ui::MainWindow *ui;

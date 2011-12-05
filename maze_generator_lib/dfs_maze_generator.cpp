@@ -22,10 +22,6 @@ maze* dfs_maze_generator::generate(unsigned int width,
     m_ = new maze(width, height, entrance, exit);
     m_->set_walls_everywhere();
 
-    for(maze::rooms_iterator i = m_->rooms_begin(); i != m_->rooms_end(); ++i) {
-        visited_[i->location()] = false;
-    }
-
     location_t cur_entrance = entrance_;
     bool got_next_entrance = false;
 
@@ -61,11 +57,6 @@ void dfs_maze_generator::random_dfs(const location_t &entrance)
         for(direction_t i; i < direction_t::NUM_DIRECTIONS; ++i) {
             const location_t cur_neighbour(current_room + i);
 
-            if (m_->is_valid_room(cur_neighbour) &&
-                !visited_[cur_neighbour])
-            {
-                all_neighbours.push_back(move_t(cur_neighbour, i));
-            }
         }
 
         if (!all_neighbours.empty()) {
@@ -73,8 +64,8 @@ void dfs_maze_generator::random_dfs(const location_t &entrance)
             s.push(rnd_neighbour.first);
 
             // clear walls between current and random cells
-            m_->room_at(current_room).remove_wall(rnd_neighbour.second);
-            m_->room_at(rnd_neighbour.first).remove_wall(rnd_neighbour.second.opposite());
+            m_->remove_wall_at(current_room, rnd_neighbour.second);
+            m_->remove_wall_at(rnd_neighbour.first, rnd_neighbour.second.opposite());
 
             all_neighbours.clear();
         }

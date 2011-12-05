@@ -25,8 +25,8 @@ private:
     current_maze& operator = (const current_maze&);
 
     static maze_ptr current_maze_;
-    static boost::mutex locker_;
 
+    static boost::mutex locker_;
 };
 
 #endif // CURRENT_MAZE_H

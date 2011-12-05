@@ -11,6 +11,7 @@ public:
     explicit maze_drawing_widget(QWidget *parent = 0);
 
     void drawStepByStep(bool val);
+    void onNextGenerationStepEvent();
 
 signals:
 
