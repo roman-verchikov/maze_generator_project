@@ -13,7 +13,7 @@ class MAZE_GENERATOR_LIBSHARED_EXPORT current_maze
 public:
     typedef maze* maze_ptr;
 
-    static maze* get();
+    static maze* instance();
 
     static void set(maze_ptr);
     static void release();

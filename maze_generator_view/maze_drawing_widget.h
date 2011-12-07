@@ -19,6 +19,7 @@ signals:
 public slots:
 
     void paintEvent(QPaintEvent *);
+    void wheelEvent(QWheelEvent *);
 
 private:
 

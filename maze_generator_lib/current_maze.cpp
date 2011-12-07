@@ -15,7 +15,7 @@ void current_maze::release()
     current_maze_ = 0;
 }
 
-maze* current_maze::get()
+maze* current_maze::instance()
 {
     // Prevent reading while being set();
     //boost::lock_guard<boost::mutex> l(locker_);

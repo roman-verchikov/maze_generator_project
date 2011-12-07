@@ -13,8 +13,8 @@ void room_drawer::operator () (const room &r)
 {
     const size_t widget_width = window_->width();
     const size_t widget_height = window_->height();
-    const size_t num_rooms_x = current_maze::get()->width();
-    const size_t num_rooms_y = current_maze::get()->height();
+    const size_t num_rooms_x = current_maze::instance()->width();
+    const size_t num_rooms_y = current_maze::instance()->height();
 
     const int gap = 0;
     const int room_width = widget_width/num_rooms_x;
