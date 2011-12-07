@@ -81,13 +81,21 @@ room& room::operator += (const room& rhs)
     return *this;
 }
 
+class a_not_b {
+    public:
+        bool operator () (bool a, bool b) const
+        {
+            return !a && b;
+        }
+};
+
 room& room::operator -= (const room& rhs)
 {
     std::transform(rhs.is_wall_.begin(),
                    rhs.is_wall_.end(),
                    is_wall_.begin(),
                    is_wall_.begin(),
-                   std::logical_and<bool>());
+                   a_not_b());
 
     return *this;
 }

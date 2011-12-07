@@ -30,8 +30,9 @@ public:
     void set_wall_at   (const location_t &, const direction_t &);
     void remove_wall_at(const location_t &, const direction_t &);
 
-    const vector2d<room>& current_maze()const;
+    const vector2d<room>& all_cells()const;
     void next_step();
+    void prev_step();
 
     std::size_t width() const;
     std::size_t height() const;
@@ -47,7 +48,7 @@ private:
 
     vector2d<room> rooms_at_current_step_;
     std::vector<change_command> commands_;
-    int current_step_;
+    unsigned int current_step_;
 
     location_t entrance_;
     location_t exit_;

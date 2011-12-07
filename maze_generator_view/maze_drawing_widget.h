@@ -12,6 +12,7 @@ public:
 
     void drawStepByStep(bool val);
     void onNextGenerationStepEvent();
+    void onPrevGenerationStepEvent();
 
 signals:
 

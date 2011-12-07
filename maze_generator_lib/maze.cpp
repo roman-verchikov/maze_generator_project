@@ -89,7 +89,7 @@ void maze::remove_wall_at(const location_t &l, const direction_t &d)
     commands_.push_back(change_command(l, d));
 }
 
-const vector2d<room>& maze::current_maze() const
+const vector2d<room>& maze::all_cells() const
 {
     return rooms_at_current_step_;
 }
@@ -104,6 +104,14 @@ void maze::next_step()
         room r = commands_.at(current_step_).get_room();
         rooms_at_current_step_.element_at(r.location()) += r;
     }
+}
+
+void maze::prev_step()
+{
+    room r = commands_.at(current_step_).get_room();
+    rooms_at_current_step_.element_at(r.location()) -= r;
+
+    current_step_ = (current_step_ - 1) % commands_.size();
 }
 
 class waller {
