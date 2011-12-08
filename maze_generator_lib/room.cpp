@@ -1,6 +1,7 @@
 #include "room.h"
 
 #include <algorithm>
+#include <boost/lambda/lambda.hpp>
 
 room::room(int x, int y)
     : location_(x, y)
@@ -81,21 +82,16 @@ room& room::operator += (const room& rhs)
     return *this;
 }
 
-class a_not_b {
-    public:
-        bool operator () (bool a, bool b) const
-        {
-            return !a && b;
-        }
-};
-
 room& room::operator -= (const room& rhs)
 {
+    using boost::lambda::_1;
+    using boost::lambda::_2;
+
     std::transform(rhs.is_wall_.begin(),
                    rhs.is_wall_.end(),
                    is_wall_.begin(),
                    is_wall_.begin(),
-                   a_not_b());
+                   (!_1 && _2));
 
     return *this;
 }

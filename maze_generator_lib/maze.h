@@ -38,9 +38,11 @@ public:
     std::size_t height() const;
 
     void set_walls_everywhere();
+    void remove_all_walls();
 
 private:
 
+    void set_borders_();
     void set_valid_entrance_location_();
     void set_valid_entrance_walls_();
 

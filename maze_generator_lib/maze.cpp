@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "direction_t.h"
 #include "maze.h"
 #include "room.h"
@@ -26,18 +28,23 @@ maze::maze(size_t w,
 
 void maze::initial_state_()
 {
+    remove_all_walls();
+    set_borders_();
+}
+
+void maze::set_borders_()
+{
     size_t w = rooms_at_current_step_.width();
     size_t h = rooms_at_current_step_.height();
 
     for(size_t i = 0; i < w; ++i) {
-        // Set border walls
         rooms_at_current_step_.element_at(i, 0).set_wall(direction_t::NORTH);
         rooms_at_current_step_.element_at(0, i).set_wall(direction_t::WEST);
         rooms_at_current_step_.element_at(i, h-1).set_wall(direction_t::SOUTH);
         rooms_at_current_step_.element_at(w-1, i).set_wall(direction_t::EAST);
 
         for (size_t j = 0; j < h; ++j) {
-            this->rooms_at_current_step_.element_at(i, j).location(i, j);
+            rooms_at_current_step_.element_at(i, j).location(i, j);
         }
     }
 }
@@ -96,34 +103,32 @@ const vector2d<room>& maze::all_cells() const
 
 void maze::next_step()
 {
-    current_step_ = (current_step_ + 1) % commands_.size();
+    room r = commands_.at(current_step_).get_room();
+    rooms_at_current_step_.element_at(r.location()) += r;
 
-    if (current_step_ == 0) {
-        initial_state_();
-    } else {
-        room r = commands_.at(current_step_).get_room();
-        rooms_at_current_step_.element_at(r.location()) += r;
-    }
+    // current_step_ should never be greater than number of modifications made
+    // on generation step
+    current_step_ = ((current_step_ + 1) - commands_.size()) ? current_step_  + 1 : current_step_;
 }
 
 void maze::prev_step()
 {
+    current_step_ = (current_step_ - 1) % commands_.size();
+
     room r = commands_.at(current_step_).get_room();
     rooms_at_current_step_.element_at(r.location()) -= r;
-
-    current_step_ = (current_step_ - 1) % commands_.size();
 }
 
-class waller {
-    public:
-        void operator () (room& r) {
-            r.set_walls();
-        }
-};
+void maze::remove_all_walls()
+{
+    std::for_each(rooms_at_current_step_.begin(),
+                  rooms_at_current_step_.end(),
+                  std::mem_fun_ref(&room::clear_walls));
+}
 
 void maze::set_walls_everywhere()
 {
     std::for_each(rooms_at_current_step_.begin(),
                   rooms_at_current_step_.end(),
-                  waller());
+                  std::mem_fun_ref(&room::set_walls));
 }
