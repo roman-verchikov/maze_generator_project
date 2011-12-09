@@ -9,7 +9,7 @@ change_command::change_command(maze* m, const location_t &l, const direction_t &
       maze_(m)
 {}
 
-room change_command::get_room_()
+room change_command::room_()
 {
     room r(location_);
     r.set_wall(wall_at_);
@@ -24,12 +24,12 @@ add_wall_command::add_wall_command (maze* m, const location_t &l, const directio
 
 void add_wall_command::execute()
 {
-    maze_->room_at(location_) += get_room_();
+    maze_->room_at(location_) += room_();
 }
 
 void add_wall_command::undo()
 {
-    maze_->room_at(location_) -= get_room_();
+    maze_->room_at(location_) -= room_();
 }
 
 //------------------------------------------------------------------------------
@@ -40,10 +40,10 @@ remove_wall_command::remove_wall_command (maze* m, const location_t &l, const di
 
 void remove_wall_command::execute()
 {
-    maze_->room_at(location_) -= get_room_();
+    maze_->room_at(location_) -= room_();
 }
 
 void remove_wall_command::undo()
 {
-    maze_->room_at(location_) += get_room_();
+    maze_->room_at(location_) += room_();
 }

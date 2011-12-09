@@ -16,7 +16,7 @@ public:
 protected:
     change_command(maze* m, const location_t&, const direction_t&);
 
-    room get_room_();
+    room room_();
 
     location_t   location_;
     direction_t  wall_at_;
