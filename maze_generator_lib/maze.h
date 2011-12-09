@@ -2,6 +2,7 @@
 #define MAZE_H
 
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 #include "change_command.h"
 #include "location_t.h"
@@ -30,6 +31,9 @@ public:
     void set_wall_at   (const location_t &, const direction_t &);
     void remove_wall_at(const location_t &, const direction_t &);
 
+    room& room_at(const location_t&);
+    const room& room_at(const location_t&)const;
+
     const vector2d<room>& all_cells()const;
     void next_step();
     void prev_step();
@@ -49,7 +53,7 @@ private:
     void initial_state_();
 
     vector2d<room> rooms_at_current_step_;
-    std::vector<change_command> commands_;
+    std::vector<boost::shared_ptr<change_command> > commands_;
     unsigned int current_step_;
 
     location_t entrance_;

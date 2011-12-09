@@ -94,11 +94,13 @@ std::size_t maze::height() const
 
 void maze::set_wall_at(const location_t &l, const direction_t &d)
 {
-    commands_.push_back(change_command(l, d));
+    commands_.push_back(boost::shared_ptr<change_command>(
+                            new add_wall_command(this, l, d)));
 }
 void maze::remove_wall_at(const location_t &l, const direction_t &d)
 {
-    commands_.push_back(change_command(l, d));
+    commands_.push_back(boost::shared_ptr<change_command>(
+                            new remove_wall_command(this, l, d)));
 }
 
 const vector2d<room>& maze::all_cells() const
@@ -109,12 +111,14 @@ const vector2d<room>& maze::all_cells() const
 void maze::next_step()
 {
     if (!commands_.empty()) {
-        room r = commands_.at(current_step_).get_room();
-        rooms_at_current_step_.element_at(r.location()) += r;
+
+        commands_.at(current_step_)->execute();
 
         // current_step_ should never be greater than number of modifications made
         // on generation step
-        current_step_ = ((current_step_ + 1) - commands_.size()) ? current_step_  + 1 : current_step_;
+        current_step_ = ((current_step_ + 1) - commands_.size()) ?
+                    current_step_  + 1 :
+                    current_step_;
     }
 }
 
@@ -123,8 +127,7 @@ void maze::prev_step()
     if (!commands_.empty()) {
         current_step_ = (current_step_ - 1) % commands_.size();
 
-        room r = commands_.at(current_step_).get_room();
-        rooms_at_current_step_.element_at(r.location()) -= r;
+        commands_.at(current_step_)->undo();
     }
 }
 
@@ -140,4 +143,14 @@ void maze::set_walls_everywhere()
     std::for_each(rooms_at_current_step_.begin(),
                   rooms_at_current_step_.end(),
                   std::mem_fun_ref(&room::set_walls));
+}
+
+room& maze::room_at(const location_t &l)
+{
+    return rooms_at_current_step_.element_at(l);
+}
+
+const room& maze::room_at(const location_t &l)const
+{
+    return this->room_at(l);
 }
