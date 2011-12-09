@@ -9,7 +9,7 @@
 
 class maze;
 
-class MAZE_GENERATOR_LIBSHARED_EXPORT dfs_maze_generator : public maze_generator_interface
+class dfs_maze_generator : public maze_generator_interface
 {
 public:
 

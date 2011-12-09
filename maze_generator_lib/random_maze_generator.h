@@ -6,7 +6,7 @@
 
 class maze;
 
-class MAZE_GENERATOR_LIBSHARED_EXPORT random_maze_generator : public maze_generator_interface
+class random_maze_generator : public maze_generator_interface
 {
 public:
     std::auto_ptr<maze> generate(unsigned int width,

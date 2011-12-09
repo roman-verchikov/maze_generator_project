@@ -8,7 +8,7 @@
 
 class maze;
 
-class MAZE_GENERATOR_LIBSHARED_EXPORT current_maze
+class current_maze
 {
 public:
     static maze* instance();

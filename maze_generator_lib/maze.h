@@ -12,7 +12,7 @@
 
 using std::size_t;
 
-class MAZE_GENERATOR_LIBSHARED_EXPORT  maze
+class maze
 {
 public:
     enum {
