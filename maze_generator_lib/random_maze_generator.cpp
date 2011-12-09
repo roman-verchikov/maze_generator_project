@@ -7,12 +7,12 @@
 #include "maze.h"
 #include "direction_t.h"
 
-maze* random_maze_generator::generate(unsigned int width,
+std::auto_ptr<maze> random_maze_generator::generate(unsigned int width,
                                    unsigned int height,
                                    const location_t &entrance,
                                    const location_t &exit)
 {
-    maze* m = new maze(width, height, entrance, exit);
+    std::auto_ptr<maze> m(new maze(width, height, entrance, exit));
 
     for(size_t i = 0; i < m->width(); ++i) {
         for(size_t j = 0; j < m->height(); ++j) {

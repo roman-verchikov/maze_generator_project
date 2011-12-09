@@ -15,10 +15,10 @@ public:
 
     dfs_maze_generator();
 
-    maze* generate(unsigned int width,
-                   unsigned int height,
-                   const location_t &entrance,
-                   const location_t &exit);
+    std::auto_ptr<maze> generate(unsigned int width,
+                                 unsigned int height,
+                                 const location_t &entrance,
+                                 const location_t &exit);
 
     std::string name()const;
 

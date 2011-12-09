@@ -11,7 +11,7 @@ dfs_maze_generator::dfs_maze_generator()
     srand(time(0));
 }
 
-maze* dfs_maze_generator::generate(unsigned int width,
+std::auto_ptr<maze> dfs_maze_generator::generate(unsigned int width,
                                    unsigned int height,
                                    const location_t &entrance,
                                    const location_t &exit)
@@ -30,7 +30,7 @@ maze* dfs_maze_generator::generate(unsigned int width,
         got_next_entrance = next_unvisited(cur_entrance);
     } while (got_next_entrance);
 
-    return m_;
+    return std::auto_ptr<maze>(m_);
 }
 
 void dfs_maze_generator::random_dfs(const location_t &entrance)

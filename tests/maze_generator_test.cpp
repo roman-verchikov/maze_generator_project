@@ -3,6 +3,7 @@
 
 #include "random_maze_generator.h"
 #include "location_t.h"
+#include "maze.h"
 
 #include <limits>
 
@@ -40,11 +41,8 @@ void maze_generator_test::generatorTest_data()
     QTest::newRow("square 10x10") << 10 << 10;
     QTest::newRow("rect 20x10") << 20 << 10;
     QTest::newRow("rect 10x20") << 10 << 20;
-    QTest::newRow("invalid rect negative width") << -1 << 20;
-    QTest::newRow("invalid rect negative height") << 20 << -1;
-    QTest::newRow("invalid zero size") << 0 << 0;
-    QTest::newRow("invalid very big size") << std::numeric_limits<int>::max() <<
-                                              std::numeric_limits<int>::max();
+    QTest::newRow("zero size maze 0x0") << 0 << 0;
+    QTest::newRow("Invalid size -1x-1") << -1 << -1;
 }
 
 void maze_generator_test::generatorTest()
@@ -57,8 +55,23 @@ void maze_generator_test::generatorTest()
 
     try
     {
-        maze *m = random_maze_generator().generate(width, height, entrance, exit);
-        QVERIFY(m != 0);
+        std::auto_ptr<maze> m(random_maze_generator().
+                              generate(width,
+                                       height,
+                                       entrance,
+                                       exit));
+
+        for (int i = 0; i < width*height; ++i)
+        {
+            m->next_step();
+        }
+
+        for (int i = 0; i < width*height; ++i)
+        {
+            m->prev_step();
+        }
+
+        QVERIFY(m.get() != 0);
     }
     catch (const std::bad_alloc &ex)
     {

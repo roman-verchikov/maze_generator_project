@@ -1,31 +1,33 @@
+#include <boost/thread/locks.hpp>
+
 #include "current_maze.h"
 #include "maze.h"
 
-#include <boost/thread/locks.hpp>
+using boost::mutex;
+using boost::lock_guard;
 
-current_maze::maze_ptr
-current_maze::current_maze_ = new maze(0, 0, location_t(), location_t());
-
-boost::mutex current_maze::locker_;
+std::auto_ptr<maze>
+current_maze::current_maze_(new maze (0, 0, location_t(), location_t()));
+mutex current_maze::locker_;
 
 void current_maze::release()
 {
-    //boost::lock_guard<boost::mutex> l(locker_);
-    delete current_maze_;
-    current_maze_ = 0;
+    current_maze_.reset();
 }
 
+// Leaves ownership for the current_maze class
 maze* current_maze::instance()
 {
-    // Prevent reading while being set();
-    //boost::lock_guard<boost::mutex> l(locker_);
-    return current_maze_;
+    return current_maze_.get();
 }
 
-void current_maze::set(maze_ptr m)
+void current_maze::set(std::auto_ptr<maze> m)
 {
-    //boost::lock_guard<boost::mutex> l(locker_);
-    release();
+    current_maze_.reset();
     current_maze_ = m;
 }
 
+boost::mutex& current_maze::mutex()
+{
+    return locker_;
+}

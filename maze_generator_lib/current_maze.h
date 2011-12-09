@@ -11,12 +11,12 @@ class maze;
 class MAZE_GENERATOR_LIBSHARED_EXPORT current_maze
 {
 public:
-    typedef maze* maze_ptr;
-
     static maze* instance();
 
-    static void set(maze_ptr);
+    static void set(std::auto_ptr<maze>);
     static void release();
+
+    static boost::mutex& mutex();
 
 private:
 
@@ -24,7 +24,7 @@ private:
     current_maze(const current_maze&);
     current_maze& operator = (const current_maze&);
 
-    static maze_ptr current_maze_;
+    static std::auto_ptr<maze> current_maze_;
 
     static boost::mutex locker_;
 };

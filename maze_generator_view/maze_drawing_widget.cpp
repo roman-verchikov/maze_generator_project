@@ -3,9 +3,9 @@
 #include <QPainter>
 #include <QWheelEvent>
 
-#include <current_maze.h>
-#include <maze.h>
-#include <maze_drawing_widget.h>
+#include "current_maze.h"
+#include "maze.h"
+#include "maze_drawing_widget.h"
 
 #include "room_drawer.h"
 

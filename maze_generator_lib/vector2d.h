@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 #include "location_t.h"
 
@@ -49,12 +50,12 @@ public:
 
     const T& element_at(const location_t &l) const throw(std::out_of_range)
     {
-        return element_at(l);
+        return element_at(l.x(), l.y());
     }
 
     T& element_at(int x, int y) throw (std::out_of_range)
     {
-        return elements_[index_(x, y)];
+        return elements_.at(index_(x, y));
     }
 
     const T& element_at(int x, int y) const throw(std::out_of_range)

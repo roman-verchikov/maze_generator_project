@@ -9,10 +9,10 @@ class maze;
 class MAZE_GENERATOR_LIBSHARED_EXPORT random_maze_generator : public maze_generator_interface
 {
 public:
-    maze* generate(unsigned int width,
-                   unsigned int height,
-                   const location_t &entrance,
-                   const location_t &exit);
+    std::auto_ptr<maze> generate(unsigned int width,
+                                 unsigned int height,
+                                 const location_t &entrance,
+                                 const location_t &exit);
 
     std::string name() const;
 };

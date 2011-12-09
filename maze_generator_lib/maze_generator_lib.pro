@@ -23,7 +23,6 @@ SOURCES += current_maze.cpp \
 HEADERS += current_maze.h \
 	dfs_maze_generator.h \
 	direction_t.h \
-	maze_generator_command_interface.h \
 	maze_generator_interface.h \
 	maze_generator_lib_global.h \
 	maze.h \

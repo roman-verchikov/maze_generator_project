@@ -12,10 +12,10 @@ class maze;
 class maze_generator_interface
 {
     public:
-        virtual maze* generate(unsigned int width,
-                               unsigned int height,
-                               const location_t &entrance,
-                               const location_t &exit) = 0;
+        virtual std::auto_ptr<maze> generate(unsigned int width,
+                                             unsigned int height,
+                                             const location_t &entrance,
+                                             const location_t &exit) = 0;
 
         virtual std::string name() const = 0;
 
