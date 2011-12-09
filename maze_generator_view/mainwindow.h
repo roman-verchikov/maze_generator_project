@@ -22,10 +22,6 @@ private slots:
 
     void on_generateButton_clicked();
 
-    void on_nextStepButton_clicked();
-
-    void on_prevStepButton_clicked();
-
 private:
 
     Ui::MainWindow *ui;
