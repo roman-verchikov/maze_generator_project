@@ -154,3 +154,8 @@ const room& maze::room_at(const location_t &l)const
 {
     return this->room_at(l);
 }
+
+bool maze::contains(const location_t &l) const
+{
+    return rooms_at_current_step_.belongs(l);
+}

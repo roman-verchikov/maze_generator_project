@@ -38,9 +38,8 @@ void dfs_maze_generator::random_dfs(const location_t &entrance)
     typedef std::pair<location_t, direction_t> move_t;
 
     std::stack<location_t> s;
-    std::vector<move_t> all_neighbours;
+    std::vector<move_t> all_neighbours(direction_t::NUM_DIRECTIONS);
 
-    all_neighbours.reserve(direction_t::NUM_DIRECTIONS);
     s.push(entrance);
 
     while (!s.empty()) {
@@ -53,21 +52,23 @@ void dfs_maze_generator::random_dfs(const location_t &entrance)
             break;
         }
 
+        int neighbours_cnt = 0;
         // peek random neighbour
         for(direction_t i; i < direction_t::NUM_DIRECTIONS; ++i) {
             const location_t cur_neighbour(current_room + i);
 
+            if (m_->contains(cur_neighbour)) {
+                all_neighbours[neighbours_cnt++] = move_t(cur_neighbour, i);
+            }
         }
 
         if (!all_neighbours.empty()) {
-            move_t rnd_neighbour = all_neighbours[rand() % all_neighbours.size()];
+            move_t rnd_neighbour = all_neighbours[rand() % neighbours_cnt];
             s.push(rnd_neighbour.first);
 
             // clear walls between current and random cells
             m_->remove_wall_at(current_room, rnd_neighbour.second);
             m_->remove_wall_at(rnd_neighbour.first, rnd_neighbour.second.opposite());
-
-            all_neighbours.clear();
         }
     }
 }

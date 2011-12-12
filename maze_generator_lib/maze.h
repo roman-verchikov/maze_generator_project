@@ -38,6 +38,8 @@ public:
     void next_step();
     void prev_step();
 
+    bool contains(const location_t &) const;
+
     std::size_t width() const;
     std::size_t height() const;
 
