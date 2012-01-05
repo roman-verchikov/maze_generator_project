@@ -2,7 +2,6 @@
 
 #include "direction_t.h"
 #include "maze.h"
-#include "room.h"
 #include "random_maze_generator.h"
 #include "location_t.h"
 
@@ -13,10 +12,11 @@ maze::maze(size_t w,
            const location_t &entrance,
            const location_t &exit)
 :
-    rooms_at_current_step_   (vector2d<room>(w, h)),
-    current_step_            (0),
-    entrance_                (entrance),
-    exit_                    (exit)
+    current_step_  (0),
+    width_         (w),
+    height_        (h),
+    entrance_      (entrance),
+    exit_          (exit)
 {
     commands_.reserve(w*h);
 
@@ -34,28 +34,27 @@ void maze::initial_state_()
 
 void maze::set_borders_()
 {
-    size_t w = rooms_at_current_step_.width();
-    size_t h = rooms_at_current_step_.height();
+    // Borders are walls between (-1, y) and (0, y), (x, -1) and (x, 0), etc.
+    for(size_t i = 0; i < width_; i++) {
+        wall_position_t wp_top    = wall_position_t::wall_position_with(location_t(i, 0), location_t(i, -1));
+        wall_position_t wp_bottom = wall_position_t::wall_position_with(location_t(i, height_-1), location_t(i, height_));
 
-    // Set EAST and WEST walls
-    for(size_t i = 0; i < h; ++i) {
-        rooms_at_current_step_.element_at(0, i).set_wall(direction_t::WEST);
-        rooms_at_current_step_.element_at(w-1, i).set_wall(direction_t::EAST);
+        set_wall_at(wp_top);
+        set_wall_at(wp_bottom);
     }
 
-    // Set SOUTH and NORTH walls + set locations for all rooms
-    for(size_t i = 0; i < w; i++) {
-        rooms_at_current_step_.element_at(i, 0).set_wall(direction_t::NORTH);
-        rooms_at_current_step_.element_at(i, h-1).set_wall(direction_t::SOUTH);
+    for(size_t i = 0; i < height_; ++i) {
+        wall_position_t wp_left = wall_position_t::wall_position_with(location_t(0, i), location_t(-1, i));
+        wall_position_t wp_right = wall_position_t::wall_position_with(location_t(width_-1, i), location_t(width_, i));
 
-        for (size_t j = 0; j < h; j++) {
-            rooms_at_current_step_.element_at(i, j).location(i, j);
-        }
+        set_wall_at(wp_left);
+        set_wall_at(wp_right);
     }
 }
 
 void maze::set_valid_entrance_walls_()
 {
+    // TODO
 #if 0
     rooms_at_current_step_.element_at(entrance_).clear_walls();
     rooms_at_current_step_.element_at(exit_).clear_walls();
@@ -64,6 +63,7 @@ void maze::set_valid_entrance_walls_()
 
 void maze::set_valid_entrance_location_()
 {
+    // TODO
 #if 0
     if (!rooms_at_current_step_.is_on_border(entrance_)) {
         entrance_ = location_t(0, 0);
@@ -82,30 +82,39 @@ void maze::set_valid_entrance_location_()
 #endif
 }
 
-std::size_t maze::width() const
+size_t maze::width() const
 {
-    return rooms_at_current_step_.width();
+    return width_;
 }
 
-std::size_t maze::height() const
+size_t maze::height() const
 {
-    return rooms_at_current_step_.height();
+    return height_;
 }
 
-void maze::set_wall_at(const location_t &l, const direction_t &d)
+// TODO: Think on passing callbacks as arguments to change_command.
+//       That would eliminate derived classes and set/remove_wall_between
+//       functions could be made private.
+void maze::record_set_wall_at(const wall_position_t &wp)
 {
-    commands_.push_back(boost::shared_ptr<change_command>(
-                            new add_wall_command(this, l, d)));
-}
-void maze::remove_wall_at(const location_t &l, const direction_t &d)
-{
-    commands_.push_back(boost::shared_ptr<change_command>(
-                            new remove_wall_command(this, l, d)));
+    commands_.push_back(shared_ptr<change_command>(
+                            new add_wall_command(this, wp)));
 }
 
-const vector2d<room>& maze::all_cells() const
+void maze::record_remove_wall_at(const wall_position_t &wp)
 {
-    return rooms_at_current_step_;
+    commands_.push_back(shared_ptr<change_command>(
+                            new remove_wall_command(this, wp)));
+}
+
+void maze::set_wall_at(const wall_position_t &wp)
+{
+    walls_.insert(wp);
+}
+
+void maze::remove_wall_at(const wall_position_t &wp)
+{
+    walls_.erase(wp);
 }
 
 void maze::next_step()
@@ -133,29 +142,86 @@ void maze::prev_step()
 
 void maze::remove_all_walls()
 {
-    std::for_each(rooms_at_current_step_.begin(),
-                  rooms_at_current_step_.end(),
-                  std::mem_fun_ref(&room::clear_walls));
+    walls_.clear();
 }
 
 void maze::set_walls_everywhere()
 {
-    std::for_each(rooms_at_current_step_.begin(),
-                  rooms_at_current_step_.end(),
-                  std::mem_fun_ref(&room::set_walls));
+    for (size_t i = 0; i < width_; ++i) {
+        for (size_t j = 0; j < height_; ++j) {
+            // vertical walls positions
+            location_t room1_pos_v(i, j);
+            location_t room2_pos_v(i+1, j);
+
+            // horizontal walls position
+            location_t room1_pos_h(i, j);
+            location_t room2_pos_h(i, j+1);
+
+            if (i != width_-1) {
+                record_set_wall_at(wall_position_t::wall_position_with(room1_pos_v, room2_pos_v));
+            }
+            record_set_wall_at(wall_position_t::wall_position_with(room1_pos_h, room2_pos_h));
+        }
+    }
 }
 
-room& maze::room_at(const location_t &l)
+vector<location_t> maze::valid_neighbours(const location_t &l) const
 {
-    return rooms_at_current_step_.element_at(l);
+    const int max_neighbours = 4;
+    const location_t neighbour_diffs[max_neighbours] = {
+        location_t(-1, 0),
+        location_t(1, 0),
+        location_t(0, -1),
+        location_t(0, 1)
+    };
+
+    vector<location_t> valid_neighbours;
+    valid_neighbours.reserve(max_neighbours);
+
+    for (int i = 0; i < max_neighbours; ++i) {
+        location_t cur_neighbour = l + neighbour_diffs[i];
+        if (is_valid(cur_neighbour)) {
+            valid_neighbours.push_back(cur_neighbour);
+        }
+    }
+
+    return valid_neighbours;
 }
 
-const room& maze::room_at(const location_t &l)const
+location_t maze::random_location() const
 {
-    return this->room_at(l);
+    return location_t(rand() % width(), rand() % height());
 }
 
-bool maze::contains(const location_t &l) const
+location_t maze::random_neighbour(const location_t &l) const
 {
-    return rooms_at_current_step_.belongs(l);
+    vector<location_t> vn = valid_neighbours(l);
+    if (vn.empty()) return l;
+    return vn.at(rand() % vn.size());
+}
+
+bool maze::is_valid(const location_t &l) const
+{
+    return (l.x() >= 0 && l.x() < width() &&
+            l.y() >= 0 && l.y() < height());
+}
+
+maze::wall_iterator maze::walls_begin()
+{
+    return walls_.begin();
+}
+
+maze::wall_iterator maze::walls_end()
+{
+    return walls_.end();
+}
+
+maze::const_wall_iterator maze::walls_begin() const
+{
+    return walls_begin();
+}
+
+maze::const_wall_iterator maze::walls_end() const
+{
+    return walls_end();
 }

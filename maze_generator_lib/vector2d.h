@@ -73,12 +73,12 @@ public:
         return height_;
     }
 
-    bool belongs(const location_t &l) const
+    bool is_valid(const location_t &l) const
     {
-        return belongs(l.x(), l.y());
+        return is_valid(l.x(), l.y());
     }
 
-    bool belongs(int x, int y) const
+    bool is_valid(int x, int y) const
     {
         return (x >= 0 &&  y >= 0 &&
                 x < width() && y < height());

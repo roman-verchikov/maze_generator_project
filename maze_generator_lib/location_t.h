@@ -16,14 +16,15 @@ public:
 
     void set(int x, int y);
 
+
     bool operator == (const location_t &rhs) const;
     bool operator != (const location_t &rhs) const;
 
     bool operator < (const location_t &rhs) const;
 
-    location_t operator + (direction_t d) const;
+    location_t operator + (const location_t &rhs) const;
 
-    unsigned long distance(const location_t &rhs) const   ;
+    unsigned long distance(const location_t &rhs) const;
 
 private:
 

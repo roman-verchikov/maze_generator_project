@@ -27,7 +27,7 @@ void location_t::y(const int &val)
 
 bool location_t::operator == (const location_t &rhs) const
 {
-    return ((x_ == rhs.x_) && (y_ == rhs.y_));
+    return (x() == rhs.x()) && (y() == rhs.y());
 }
 
 bool location_t::operator != (const location_t &rhs) const
@@ -37,8 +37,8 @@ bool location_t::operator != (const location_t &rhs) const
 
 void location_t::set(int x, int y)
 {
-    x_ = x;
-    y_ = y;
+    this->x(x);
+    this->y(y);
 }
 
 bool location_t::operator < (const location_t &rhs) const
@@ -46,36 +46,15 @@ bool location_t::operator < (const location_t &rhs) const
     return (this->distance(location_t(0,0)) < rhs.distance(location_t(0,0)));
 }
 
-location_t location_t::operator + (direction_t d) const
+location_t location_t::operator + (const location_t &rhs) const
 {
-    int dx = x_;
-    int dy = y_;
-
-    switch (d) {
-        case direction_t::NORTH:
-            --dy;
-            break;
-
-        case direction_t::SOUTH:
-            ++dy;
-            break;
-
-        case direction_t::WEST:
-            --dx;
-            break;
-
-        case direction_t::EAST:
-            ++dx;
-            break;
-    }
-
-    return location_t(dx, dy);
+    return location_t(x() + rhs.x(), y() + rhs.y());
 }
 
 unsigned long location_t::distance(const location_t &rhs) const
 {
-    const unsigned long dx = x_ - rhs.x_;
-    const unsigned long dy = y_ - rhs.y_;
+    const unsigned long dx = x() - rhs.x();
+    const unsigned long dy = y() - rhs.y();
 
     return (dx*dx + dy*dy);
 }

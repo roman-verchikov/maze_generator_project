@@ -16,8 +16,8 @@ maze_drawing_widget::maze_drawing_widget(QWidget *parent) :
 
 void maze_drawing_widget::paintEvent(QPaintEvent *)
 {
-    std::for_each(current_maze::instance()->all_cells().begin(),
-                  current_maze::instance()->all_cells().end(),
+    std::for_each(current_maze::instance()->walls_begin(),
+                  current_maze::instance()->walls_end(),
                   room_drawer(this));
 }
 

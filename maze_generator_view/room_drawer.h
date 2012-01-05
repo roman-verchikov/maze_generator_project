@@ -2,17 +2,17 @@
 #define ROOM_DRAWER_H
 
 class QWidget;
-class room;
+class wall_position_t;
 
 class room_drawer
 {
 public:
     room_drawer(QWidget *w);
 
-    void operator () (const room &r);
+    void operator () (const wall_position_t &);
 
 private:
-    QWidget *window_;
+    QWidget *const window_;
 };
 
 #endif // ROOM_DRAWER_H

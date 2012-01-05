@@ -3,47 +3,39 @@
 
 //------------------------------------------------------------------------------
 
-change_command::change_command(maze* m, const location_t &l, const direction_t &d)
-    : location_(l),
-      wall_at_(d),
+change_command::change_command(maze* m, const wall_position_t &wall_pos)
+    : wall_pos_(wall_pos),
       maze_(m)
 {}
 
-room change_command::room_()
-{
-    room r(location_);
-    r.set_wall(wall_at_);
-
-    return r;
-}
 //------------------------------------------------------------------------------
 
-add_wall_command::add_wall_command (maze* m, const location_t &l, const direction_t &d)
-    : change_command(m, l, d)
+add_wall_command::add_wall_command (maze* m, const wall_position_t &wall_pos)
+    : change_command(m, wall_pos)
 {}
 
 void add_wall_command::execute()
 {
-    maze_->room_at(location_) += room_();
+    maze_->set_wall_at(wall_pos_);
 }
 
 void add_wall_command::undo()
 {
-    maze_->room_at(location_) -= room_();
+    maze_->remove_wall_at(wall_pos_);
 }
 
 //------------------------------------------------------------------------------
 
-remove_wall_command::remove_wall_command (maze* m, const location_t &l, const direction_t &d)
-    : change_command(m, l, d)
+remove_wall_command::remove_wall_command (maze* m, const wall_position_t &wall_pos)
+    : change_command(m, wall_pos)
 {}
 
 void remove_wall_command::execute()
 {
-    maze_->room_at(location_) -= room_();
+    maze_->remove_wall_at(wall_pos_);
 }
 
 void remove_wall_command::undo()
 {
-    maze_->room_at(location_) += room_();
+    maze_->set_wall_at(wall_pos_);
 }

@@ -1,9 +1,7 @@
 #ifndef CHANGE_COMMAND_H
 #define CHANGE_COMMAND_H
 
-#include "location_t.h"
-#include "direction_t.h"
-#include "room.h"
+#include "wall_position_t.h"
 
 class maze;
 
@@ -14,19 +12,16 @@ public:
     virtual void undo() = 0;
 
 protected:
-    change_command(maze* m, const location_t&, const direction_t&);
+    change_command(maze* m, const wall_position_t &);
 
-    room room_();
-
-    location_t   location_;
-    direction_t  wall_at_;
-    maze        *maze_;
+    wall_position_t wall_pos_;
+    maze           *maze_;
 };
 
 class add_wall_command : public change_command
 {
 public:
-    add_wall_command (maze* m, const location_t&, const direction_t &);
+    add_wall_command (maze* m, const wall_position_t &);
 
     void execute();
     void undo();
@@ -35,7 +30,7 @@ public:
 class remove_wall_command : public change_command
 {
 public:
-    remove_wall_command (maze* m, const location_t&, const direction_t &);
+    remove_wall_command (maze* m, const wall_position_t &);
 
     void execute();
     void undo();
