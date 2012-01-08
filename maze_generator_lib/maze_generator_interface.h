@@ -4,8 +4,6 @@
 #include <string>
 #include <memory>
 
-#include "maze_generator_lib_global.h"
-
 class location_t;
 class maze;
 
@@ -19,7 +17,6 @@ public:
 
     // TODO: should support l10n
     virtual std::string name() const = 0;
-
 };
 
 #endif // MAZE_GENERATOR_INTERFACE_H
