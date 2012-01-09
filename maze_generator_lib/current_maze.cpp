@@ -3,9 +3,6 @@
 #include "current_maze.h"
 #include "maze.h"
 
-using boost::mutex;
-using boost::lock_guard;
-
 std::auto_ptr<maze>
 current_maze::current_maze_(new maze (0, 0, location_t(), location_t()));
 mutex current_maze::locker_;
