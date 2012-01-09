@@ -15,7 +15,8 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += maze_generator_test.cpp
+SOURCES += maze_generator_test.cpp \
+    wall_position_test.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 INCLUDEPATH += ../maze_generator_lib
@@ -33,3 +34,6 @@ DEPENDPATH += $$PWD/../maze_generator_lib
 win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../maze_generator_lib/release/maze_generator_lib.lib
 else:win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../maze_generator_lib/debug/maze_generator_lib.lib
 else:unix:!symbian: PRE_TARGETDEPS += $$OUT_PWD/../maze_generator_lib/libmaze_generator_lib.a
+
+HEADERS += \
+    wall_position_test.h

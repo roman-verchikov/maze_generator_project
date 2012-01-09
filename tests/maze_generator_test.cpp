@@ -1,11 +1,12 @@
 #include <QtCore/QString>
 #include <QtTest/QtTest>
 
-#include "random_maze_generator.h"
+#include <limits>
+
 #include "location_t.h"
 #include "maze.h"
-
-#include <limits>
+#include "random_maze_generator.h"
+#include "wall_position_test.h"
 
 class maze_generator_test : public QObject
 {
@@ -19,6 +20,8 @@ private Q_SLOTS:
     void cleanupTestCase();
     void generatorTest_data();
     void generatorTest();
+
+    void runWallPositionTests();
 };
 
 maze_generator_test::maze_generator_test()
@@ -35,6 +38,7 @@ void maze_generator_test::cleanupTestCase()
 
 void maze_generator_test::generatorTest_data()
 {
+#if 0
     QTest::addColumn<int>("width");
     QTest::addColumn<int>("height");
 
@@ -43,10 +47,12 @@ void maze_generator_test::generatorTest_data()
     QTest::newRow("rect 10x20") << 10 << 20;
     QTest::newRow("zero size maze 0x0") << 0 << 0;
     QTest::newRow("Invalid size -1x-1") << -1 << -1;
+#endif
 }
 
 void maze_generator_test::generatorTest()
 {
+#if 0
     location_t entrance;
     location_t exit;
 
@@ -81,6 +87,16 @@ void maze_generator_test::generatorTest()
     {
         QFAIL("Caught unknown exception");
     }
+#endif
+}
+
+void maze_generator_test::runWallPositionTests()
+{
+    wall_position_test wpt;
+
+    wpt.equaltyTest();
+    wpt.addingWallPositionToSetTest();
+    wpt.addingLocationsToMultisetTest();
 }
 
 QTEST_APPLESS_MAIN(maze_generator_test);
