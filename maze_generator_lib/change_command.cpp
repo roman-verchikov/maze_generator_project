@@ -3,7 +3,7 @@
 
 //------------------------------------------------------------------------------
 
-change_command::change_command(maze* m, const wall_position_t &wall_pos)
+change_command_t::change_command_t(maze* m, const wall_position_t &wall_pos)
     : wall_pos_(wall_pos),
       maze_(m)
 {}
@@ -11,7 +11,7 @@ change_command::change_command(maze* m, const wall_position_t &wall_pos)
 //------------------------------------------------------------------------------
 
 add_wall_command::add_wall_command (maze* m, const wall_position_t &wall_pos)
-    : change_command(m, wall_pos)
+    : change_command_t(m, wall_pos)
 {}
 
 void add_wall_command::execute()
@@ -27,7 +27,7 @@ void add_wall_command::undo()
 //------------------------------------------------------------------------------
 
 remove_wall_command::remove_wall_command (maze* m, const wall_position_t &wall_pos)
-    : change_command(m, wall_pos)
+    : change_command_t(m, wall_pos)
 {}
 
 void remove_wall_command::execute()

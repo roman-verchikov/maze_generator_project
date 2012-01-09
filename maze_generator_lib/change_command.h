@@ -5,20 +5,20 @@
 
 class maze;
 
-class change_command
+class change_command_t
 {
 public:
     virtual void execute() = 0;
     virtual void undo() = 0;
 
 protected:
-    change_command(maze* m, const wall_position_t &);
+    change_command_t(maze* m, const wall_position_t &);
 
     wall_position_t wall_pos_;
     maze           *maze_;
 };
 
-class add_wall_command : public change_command
+class add_wall_command : public change_command_t
 {
 public:
     add_wall_command (maze* m, const wall_position_t &);
@@ -27,7 +27,7 @@ public:
     void undo();
 };
 
-class remove_wall_command : public change_command
+class remove_wall_command : public change_command_t
 {
 public:
     remove_wall_command (maze* m, const wall_position_t &);
