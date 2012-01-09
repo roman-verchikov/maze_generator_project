@@ -97,13 +97,13 @@ size_t maze::height() const
 //       functions could be made private.
 void maze::record_set_wall_at(const wall_position_t &wp)
 {
-    commands_.push_back(shared_ptr<change_command>(
+    commands_.push_back(shared_ptr<change_command_t>(
                             new add_wall_command(this, wp)));
 }
 
 void maze::record_remove_wall_at(const wall_position_t &wp)
 {
-    commands_.push_back(shared_ptr<change_command>(
+    commands_.push_back(shared_ptr<change_command_t>(
                             new remove_wall_command(this, wp)));
 }
 

@@ -67,7 +67,7 @@ private:
 
     void initial_state_();
 
-    vector<shared_ptr<change_command> > commands_;
+    vector<shared_ptr<change_command_t> > commands_;
     set<wall_position_t> walls_;
 
     unsigned int current_step_;
