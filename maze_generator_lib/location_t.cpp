@@ -43,7 +43,7 @@ void location_t::set(int x, int y)
 
 bool location_t::operator < (const location_t &rhs) const
 {
-    return (this->distance(location_t(0,0)) < rhs.distance(location_t(0,0)));
+    return x() < rhs.x() || (!(rhs.x() < x()) && y() < rhs.y() );
 }
 
 location_t location_t::operator + (const location_t &rhs) const
