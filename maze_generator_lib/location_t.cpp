@@ -43,6 +43,7 @@ void location_t::set(int x, int y)
 
 bool location_t::operator < (const location_t &rhs) const
 {
+    // taken from operator < (std::pair, std::pair);
     return x() < rhs.x() || (!(rhs.x() < x()) && y() < rhs.y() );
 }
 
