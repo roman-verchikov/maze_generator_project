@@ -1,7 +1,9 @@
 #ifndef DFS_MAZE_GENERATOR_H
 #define DFS_MAZE_GENERATOR_H
 
-#include <map>
+#include <boost/optional.hpp>
+
+#include <set>
 
 #include "maze_generator_interface.h"
 #include "maze_generator_lib_global.h"
@@ -35,16 +37,16 @@ private:
         location_t rl_;
     };
 
-    typedef std::map<location_t, bool> visited_type;
+    typedef std::set<location_t> visited_type;
 
-    void random_dfs(const location_t &entrance);
-    bool next_unvisited(location_t &rl) const;
+    void random_dfs(maze *m, location_t &entrance);
+    boost::optional<location_t> next_unvisited(const maze*) const;
 
     wall_position_t entrance_;
     wall_position_t exit_;
     maze* m_;
 
-    visited_type visited_;
+    visited_type visited_cells_;
 };
 
 
