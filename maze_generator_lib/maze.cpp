@@ -125,16 +125,18 @@ void maze::next_step()
 
         // current_step_ should never be greater than number of modifications made
         // on generation step
-        current_step_ = ((current_step_ + 1) - commands_.size()) ?
-                    current_step_  + 1 :
-                    current_step_;
+        if (current_step_ != (commands_.size()-1)) {
+            ++current_step_;
+        }
     }
 }
 
 void maze::prev_step()
 {
     if (!commands_.empty()) {
-        current_step_ = (current_step_ - 1) % commands_.size();
+        if (current_step_ != 0) {
+            --current_step_;
+        }
 
         commands_.at(current_step_)->undo();
     }
