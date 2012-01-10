@@ -28,8 +28,8 @@ void MainWindow::on_generateButton_clicked()
 {
     const size_t width  = ui->widthSpinBox->value();
     const size_t height = ui->heightSpinBox->value();
-    const wall_position_t entrance = wall_position_t::wall_position_with(location_t(-1,0), location_t(0,0));
-    const wall_position_t exit     = wall_position_t::wall_position_with(location_t(width-1,height), location_t(width,height));
+    const wall_position_t entrance = wall_position_t(location_t(-1,0), location_t(0,0));
+    const wall_position_t exit     = wall_position_t(location_t(width-1,height), location_t(width,height));
 
     if (ui->randomMazeRadioBtn->isChecked()) {
         current_maze::set(random_maze_generator().generate(width,

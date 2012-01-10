@@ -14,7 +14,7 @@ std::auto_ptr<maze> random_maze_generator::generate(unsigned int width,
         location_t r1 = m->random_location();
         location_t r2 = m->random_neighbour(r1);
 
-        m->record_set_wall_at(wall_position_t::wall_position_with(r1, r2));
+        m->record_set_wall_at(wall_position_t(r1, r2));
     }
 
     return m;

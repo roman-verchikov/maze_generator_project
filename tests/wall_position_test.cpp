@@ -45,23 +45,23 @@ void wall_position_test::equaltyTest()
         bool expected_result;
     } test_data[] = {
         {
-            wall_position_t::wall_position_with(location_t(1,0), location_t(0,1)),
-            wall_position_t::wall_position_with(location_t(1,0), location_t(0,1)),
+            wall_position_t(location_t(1,0), location_t(0,1)),
+            wall_position_t(location_t(1,0), location_t(0,1)),
             true
         },
         {
-            wall_position_t::wall_position_with(location_t(1,1), location_t(1,2)),
-            wall_position_t::wall_position_with(location_t(1,0), location_t(1,1)),
+            wall_position_t(location_t(1,1), location_t(1,2)),
+            wall_position_t(location_t(1,0), location_t(1,1)),
             false
         },
         {
-            wall_position_t::wall_position_with(location_t(-1,0), location_t(-1,1)),
-            wall_position_t::wall_position_with(location_t(0,-1), location_t(1,-1)),
+            wall_position_t(location_t(-1,0), location_t(-1,1)),
+            wall_position_t(location_t(0,-1), location_t(1,-1)),
             false
         },
         {
-            wall_position_t::wall_position_with(location_t(10,10), location_t(10,11)),
-            wall_position_t::wall_position_with(location_t(10,11), location_t(10,10)),
+            wall_position_t(location_t(10,10), location_t(10,11)),
+            wall_position_t(location_t(10,11), location_t(10,10)),
             true
         }
     };
@@ -94,7 +94,7 @@ void wall_position_test::addingWallPositionToSetTest()
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
-            wall_position_t wp = wall_position_t::wall_position_with(location_t(i,j), location_t(j,i));
+            wall_position_t wp = wall_position_t(location_t(i,j), location_t(j,i));
 
             insert_ret_t insert_ret = s.insert(wp);
 

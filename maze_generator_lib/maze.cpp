@@ -36,16 +36,16 @@ void maze::set_borders_()
 {
     // Borders are walls between (-1, y) and (0, y), (x, -1) and (x, 0), etc.
     for(size_t i = 0; i < width_; i++) {
-        wall_position_t wp_top    = wall_position_t::wall_position_with(location_t(i, 0), location_t(i, -1));
-        wall_position_t wp_bottom = wall_position_t::wall_position_with(location_t(i, height_-1), location_t(i, height_));
+        wall_position_t wp_top    = wall_position_t(location_t(i, 0), location_t(i, -1));
+        wall_position_t wp_bottom = wall_position_t(location_t(i, height_-1), location_t(i, height_));
 
         set_wall_at(wp_top);
         set_wall_at(wp_bottom);
     }
 
     for(size_t i = 0; i < height_; ++i) {
-        wall_position_t wp_left = wall_position_t::wall_position_with(location_t(0, i), location_t(-1, i));
-        wall_position_t wp_right = wall_position_t::wall_position_with(location_t(width_-1, i), location_t(width_, i));
+        wall_position_t wp_left = wall_position_t(location_t(0, i), location_t(-1, i));
+        wall_position_t wp_right = wall_position_t(location_t(width_-1, i), location_t(width_, i));
 
         set_wall_at(wp_left);
         set_wall_at(wp_right);
@@ -160,9 +160,9 @@ void maze::set_walls_everywhere()
             location_t room2_pos_h(i, j+1);
 
             if (i != width_-1) {
-                record_set_wall_at(wall_position_t::wall_position_with(room1_pos_v, room2_pos_v));
+                record_set_wall_at(wall_position_t(room1_pos_v, room2_pos_v));
             }
-            record_set_wall_at(wall_position_t::wall_position_with(room1_pos_h, room2_pos_h));
+            record_set_wall_at(wall_position_t(room1_pos_h, room2_pos_h));
         }
     }
 }
