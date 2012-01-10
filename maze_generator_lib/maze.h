@@ -27,8 +27,8 @@ public:
 
     maze(size_t w,
          size_t h,
-         const location_t &entrance,
-         const location_t &exit);
+         const wall_position_t &entrance,
+         const wall_position_t &exit);
 
     maze(const maze& rhs);
     maze& operator = (const maze& rhs);
@@ -74,8 +74,8 @@ private:
 
     size_t width_;
     size_t height_;
-    location_t entrance_;
-    location_t exit_;
+    wall_position_t entrance_;
+    wall_position_t exit_;
 };
 
 #endif // MAZE_H

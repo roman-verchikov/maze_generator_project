@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 
-class location_t;
+class wall_position_t;
 class maze;
 
 class maze_generator_interface
@@ -12,8 +12,8 @@ class maze_generator_interface
 public:
     virtual std::auto_ptr<maze> generate(unsigned int width,
                                          unsigned int height,
-                                         const location_t &entrance,
-                                         const location_t &exit) = 0;
+                                         const wall_position_t &entrance,
+                                         const wall_position_t &exit) = 0;
 
     // TODO: should support l10n
     virtual std::string name() const = 0;

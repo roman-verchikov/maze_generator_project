@@ -1,8 +1,9 @@
 #include "current_maze.h"
 #include "maze.h"
+#include "wall_position_t.h"
 
 std::auto_ptr<maze>
-current_maze::current_maze_(new maze (0, 0, location_t(), location_t()));
+current_maze::current_maze_(new maze (0, 0, wall_position_t(), wall_position_t()));
 
 void current_maze::release()
 {

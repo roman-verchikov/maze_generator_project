@@ -3,14 +3,14 @@
 #include "direction_t.h"
 #include "maze.h"
 #include "random_maze_generator.h"
-#include "location_t.h"
+#include "wall_position_t.h"
 
 using std::size_t;
 
 maze::maze(size_t w,
            size_t h,
-           const location_t &entrance,
-           const location_t &exit)
+           const wall_position_t &entrance,
+           const wall_position_t &exit)
 :
     current_step_  (0),
     width_         (w),

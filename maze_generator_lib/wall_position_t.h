@@ -11,6 +11,7 @@ public:
     static wall_position_t wall_position_with(const location_t &loc1,
                                               const location_t &loc2);
 
+    wall_position_t();
 private:
     wall_position_t(const location_t &loc1, const location_t &loc2);
 };

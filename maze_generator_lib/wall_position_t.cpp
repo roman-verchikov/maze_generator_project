@@ -1,5 +1,7 @@
 #include "wall_position_t.h"
 
+wall_position_t::wall_position_t() {}
+
 wall_position_t::wall_position_t(const location_t &loc1, const location_t &loc2)
     : std::pair<location_t, location_t>(loc1, loc2)
 { }

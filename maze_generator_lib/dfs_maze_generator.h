@@ -5,7 +5,7 @@
 
 #include "maze_generator_interface.h"
 #include "maze_generator_lib_global.h"
-#include "location_t.h"
+#include "wall_position_t.h"
 
 class maze;
 
@@ -17,8 +17,8 @@ public:
 
     std::auto_ptr<maze> generate(unsigned int width,
                                  unsigned int height,
-                                 const location_t &entrance,
-                                 const location_t &exit);
+                                 const wall_position_t &entrance,
+                                 const wall_position_t &exit);
 
     std::string name()const;
 
@@ -40,8 +40,8 @@ private:
     void random_dfs(const location_t &entrance);
     bool next_unvisited(location_t &rl) const;
 
-    location_t entrance_;
-    location_t exit_;
+    wall_position_t entrance_;
+    wall_position_t exit_;
     maze* m_;
 
     visited_type visited_;

@@ -4,32 +4,22 @@
 
 #include "dfs_maze_generator.h"
 #include "maze.h"
+#include "wall_position_t.h"
 
-dfs_maze_generator::dfs_maze_generator()
-{
-    srand(time(0));
-}
+using std::auto_ptr;
 
-std::auto_ptr<maze> dfs_maze_generator::generate(unsigned int width,
+dfs_maze_generator::dfs_maze_generator() {}
+
+auto_ptr<maze> dfs_maze_generator::generate(unsigned int width,
                                    unsigned int height,
-                                   const location_t &entrance,
-                                   const location_t &exit)
+                                   const wall_position_t &entrance,
+                                   const wall_position_t &exit)
 {
-    entrance_ = entrance;
-    exit_     = exit;
+    auto_ptr<maze> m(new maze(width, height, entrance, exit));
 
-    m_ = new maze(width, height, entrance, exit);
-    m_->set_walls_everywhere();
+    m->set_walls_everywhere();
 
-    location_t cur_entrance = entrance_;
-    bool got_next_entrance = false;
-
-    do {
-        random_dfs(cur_entrance);
-        got_next_entrance = next_unvisited(cur_entrance);
-    } while (got_next_entrance);
-
-    return std::auto_ptr<maze>(m_);
+    return m;
 }
 
 void dfs_maze_generator::random_dfs(const location_t &)

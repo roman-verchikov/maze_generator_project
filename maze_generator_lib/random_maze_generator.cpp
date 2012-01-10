@@ -1,15 +1,12 @@
-#include "random_maze_generator.h"
-
-#include <vector>
-#include <memory>
-
-#include "maze.h"
 #include "direction_t.h"
+#include "maze.h"
+#include "random_maze_generator.h"
+#include "wall_position_t.h"
 
 std::auto_ptr<maze> random_maze_generator::generate(unsigned int width,
                                    unsigned int height,
-                                   const location_t &entrance,
-                                   const location_t &exit)
+                                   const wall_position_t &entrance,
+                                   const wall_position_t &exit)
 {
     std::auto_ptr<maze> m(new maze(width, height, entrance, exit));
 
