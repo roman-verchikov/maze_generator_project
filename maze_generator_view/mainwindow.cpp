@@ -50,12 +50,11 @@ void MainWindow::on_generateButton_clicked()
 
 void MainWindow::addGeneratorTypeRadioButtons()
 {
-    // TODO: replace with lambda
-    for (radio_buttons_iterator i = radioButtons.begin();
-         i != radioButtons.end(); ++i)
-    {
-        ui->verticalLayout->addWidget(*i);
-    }
+    std::for_each(radioButtons.begin(),
+                  radioButtons.end(),
+                  [=] (generator_type_radio_button_interface *i) {
+                    ui->verticalLayout->addWidget(i);
+                  });
 
     radioButtons.front()->setChecked(true);
 }
@@ -69,7 +68,8 @@ maze_generator_type MainWindow::getSelectedGeneratorType() const
                                                          [] (radio_buttons_element i) -> bool
                                                          { return i->isChecked(); });
 
-    return (selected != radioButtons.end()) ? (*selected)->get_type() : UNKNOWN_GENERATOR_TYPE;
+    return (selected != radioButtons.end()) ? (*selected)->get_type() :
+                                              UNKNOWN_GENERATOR_TYPE;
 }
 
 void MainWindow::on_stepByStepCheckBox_toggled(bool checked)
