@@ -106,32 +106,7 @@
              <property name="flat">
               <bool>false</bool>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <widget class="QRadioButton" name="randomMazeRadioBtn">
-                <property name="text">
-                 <string>Random</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="type1MazeRadioBtn">
-                <property name="text">
-                 <string>Type 1</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="type2MazeRadioBtn">
-                <property name="text">
-                 <string>Type 2</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             <layout class="QVBoxLayout" name="verticalLayout"/>
             </widget>
            </item>
            <item>
@@ -181,6 +156,25 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="otherOptionsGroup">
+             <property name="title">
+              <string>Other options</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QCheckBox" name="stepByStepCheckBox">
+                <property name="toolTip">
+                 <string>Displays each step of maze generation when checked. Use mouse wheel to step back/forward.</string>
+                </property>
+                <property name="text">
+                 <string>Step-by-step draw</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
            <item>
             <spacer name="verticalSpacer_3">

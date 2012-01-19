@@ -12,11 +12,16 @@ TEMPLATE = app
 SOURCES +=  main.cpp \
 	mainwindow.cpp \
 	maze_drawing_widget.cpp \
-	room_drawer.cpp
+	room_drawer.cpp \
+    random_gt_rb.cpp \
+    dfs_gt_rb.cpp
 
 HEADERS += mainwindow.h \
 	maze_drawing_widget.h \
-	room_drawer.h
+	room_drawer.h \
+    random_gt_rb.h \
+    dfs_gt_rb.h \
+    gt_rb_interface.h
 
 FORMS    += mainwindow.ui
 

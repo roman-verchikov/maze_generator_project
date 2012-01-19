@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include <memory>
+#include <vector>
+
+#include "maze_generator_factory.h"
+#include "gt_rb_interface.h"
 
 class maze;
 
@@ -22,9 +26,15 @@ private slots:
 
     void on_generateButton_clicked();
 
+    void on_stepByStepCheckBox_toggled(bool checked);
+
 private:
+    maze_generator_type getSelectedGeneratorType() const;
+    void addGeneratorTypeRadioButtons();
 
     Ui::MainWindow *ui;
+
+    std::vector<gt_rb_interface*> radioButtons;
 };
 
 #endif // MAINWINDOW_H

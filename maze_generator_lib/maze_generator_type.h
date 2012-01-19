@@ -1,0 +1,11 @@
+#ifndef MAZE_GENERATOR_TYPE_H
+#define MAZE_GENERATOR_TYPE_H
+
+enum maze_generator_type
+{
+    RANDOM_GENERATOR_TYPE,
+    DFS_GENERATOR_TYPE,
+    UNKNOWN_GENERATOR_TYPE
+};
+
+#endif // MAZE_GENERATOR_TYPE_H
