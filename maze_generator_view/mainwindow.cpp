@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "current_maze.h"
+#include "maze.h"
 #include "random_gt_rb.h"
 #include "dfs_gt_rb.h"
 
@@ -30,7 +31,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_generateButton_clicked()
+void MainWindow::generateMaze()
 {
     const size_t w = ui->widthSpinBox->value();
     const size_t h = ui->heightSpinBox->value();
@@ -52,8 +53,8 @@ void MainWindow::addGeneratorTypeRadioButtons()
 {
     std::for_each(radioButtons.begin(),
                   radioButtons.end(),
-                  [=] (generator_type_radio_button_interface *i) {
-                    ui->verticalLayout->addWidget(i);
+                  [&] (generator_type_radio_button_interface *i) {
+                      ui->verticalLayout->addWidget(i);
                   });
 
     radioButtons.front()->setChecked(true);
@@ -61,7 +62,7 @@ void MainWindow::addGeneratorTypeRadioButtons()
 
 maze_generator_type MainWindow::getSelectedGeneratorType() const
 {
-    typedef generator_type_radio_button_interface *radio_buttons_element;
+    typedef generator_type_radio_button_interface* radio_buttons_element;
 
     radio_buttons_const_iterator selected = std::find_if(radioButtons.begin(),
                                                          radioButtons.end(),
@@ -74,5 +75,19 @@ maze_generator_type MainWindow::getSelectedGeneratorType() const
 
 void MainWindow::on_stepByStepCheckBox_toggled(bool checked)
 {
+    if (checked) {
+        current_maze::instance()->restore_previous_step();
+    } else {
+        current_maze::instance()->goto_last_step();
+    }
+}
 
+void MainWindow::on_widthSpinBox_valueChanged(int)
+{
+    generateMaze();
+}
+
+void MainWindow::on_heightSpinBox_valueChanged(int)
+{
+    generateMaze();
 }

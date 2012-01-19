@@ -46,6 +46,8 @@ public:
     void next_step();
     void prev_step();
 
+    void goto_last_step();
+    void restore_previous_step();
 
     bool is_valid(const location_t &) const;
 
@@ -71,6 +73,7 @@ private:
     set<wall_position_t> walls_;
 
     unsigned int current_step_;
+    unsigned int prev_step_;
 
     size_t width_;
     size_t height_;

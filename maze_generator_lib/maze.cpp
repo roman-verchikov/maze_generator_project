@@ -13,6 +13,7 @@ maze::maze(size_t w,
            const wall_position_t &exit)
 :
     current_step_  (0),
+    prev_step_     (0),
     width_         (w),
     height_        (h),
     entrance_      (entrance),
@@ -226,4 +227,20 @@ maze::const_wall_iterator maze::walls_begin() const
 maze::const_wall_iterator maze::walls_end() const
 {
     return walls_end();
+}
+
+void maze::restore_previous_step()
+{
+    while (prev_step_ != current_step_) {
+        prev_step();
+    }
+}
+
+void maze::goto_last_step()
+{
+    prev_step_ = current_step_;
+
+    while (commands_.size() && current_step_ != commands_.size()-1) {
+        next_step();
+    }
 }

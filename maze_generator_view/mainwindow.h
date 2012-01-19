@@ -24,11 +24,14 @@ public:
 
 private slots:
 
-    void on_generateButton_clicked();
-
     void on_stepByStepCheckBox_toggled(bool checked);
 
+    void on_widthSpinBox_valueChanged(int arg1);
+
+    void on_heightSpinBox_valueChanged(int arg1);
+
 private:
+    void generateMaze();
     maze_generator_type getSelectedGeneratorType() const;
     void addGeneratorTypeRadioButtons();
 
