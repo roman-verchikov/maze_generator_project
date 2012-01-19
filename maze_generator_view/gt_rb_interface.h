@@ -5,9 +5,10 @@
 
 #include "maze_generator_type.h"
 
-class gt_rb_interface : public QRadioButton {
+// TODO: readable names for classes
+class generator_type_radio_button_interface : public QRadioButton {
     public:
-        gt_rb_interface(QWidget *parent = 0) : QRadioButton(parent) {}
+        generator_type_radio_button_interface(QWidget *parent = 0) : QRadioButton(parent) {}
         virtual maze_generator_type get_type() const = 0;
 };
 

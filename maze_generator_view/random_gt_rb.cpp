@@ -1,7 +1,7 @@
 #include "random_gt_rb.h"
 
-random_gt_rb::random_gt_rb(QWidget *parent) :
-    gt_rb_interface(parent)
+random_generator_type_radio_button::random_generator_type_radio_button(QWidget *parent) :
+    generator_type_radio_button_interface(parent)
 {
     this->setText(tr("Random"));
 }

@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    radioButtons.push_back(new random_gt_rb(ui->mazeGeneratorTypeGroupBox));
-    radioButtons.push_back(new dfs_gt_rb(ui->mazeGeneratorTypeGroupBox));
+    radioButtons.push_back(new random_generator_type_radio_button(ui->mazeGeneratorTypeGroupBox));
+    radioButtons.push_back(new dfs_generator_type_radio_button(ui->mazeGeneratorTypeGroupBox));
 
     addGeneratorTypeRadioButtons();
 }
@@ -51,7 +51,7 @@ void MainWindow::on_generateButton_clicked()
 void MainWindow::addGeneratorTypeRadioButtons()
 {
     // TODO: replace with lambda
-    for (std::vector<gt_rb_interface*>::iterator i = radioButtons.begin();
+    for (std::vector<generator_type_radio_button_interface*>::iterator i = radioButtons.begin();
          i != radioButtons.end(); ++i)
     {
         ui->verticalLayout->addWidget(*i);

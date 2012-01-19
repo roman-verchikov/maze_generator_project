@@ -1,7 +1,7 @@
 #include "dfs_gt_rb.h"
 
-dfs_gt_rb::dfs_gt_rb(QWidget *parent) :
-    gt_rb_interface(parent)
+dfs_generator_type_radio_button::dfs_generator_type_radio_button(QWidget *parent) :
+    generator_type_radio_button_interface(parent)
 {
     setText(tr("DFS"));
 }

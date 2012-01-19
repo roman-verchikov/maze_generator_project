@@ -34,7 +34,7 @@ private:
 
     Ui::MainWindow *ui;
 
-    std::vector<gt_rb_interface*> radioButtons;
+    std::vector<generator_type_radio_button_interface*> radioButtons;
 };
 
 #endif // MAINWINDOW_H
