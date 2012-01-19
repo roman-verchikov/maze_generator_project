@@ -25,6 +25,8 @@ HEADERS += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
+QMAKE_CXXFLAGS += -std=c++0x
+
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += libboost-dev
 
