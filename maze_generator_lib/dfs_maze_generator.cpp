@@ -56,8 +56,8 @@ dfs_maze_generator::next_unvisited(const maze* m) const
 {
     optional<location_t> unvisited;
 
-    for (int i = 0; i < m->width() && !unvisited; ++i) {
-        for (int j = 0; j < m->height() && !unvisited; ++j) {
+    for (size_t i = 0; i < m->width() && !unvisited; ++i) {
+        for (size_t j = 0; j < m->height() && !unvisited; ++j) {
             location_t l(i,j);
             if (visited_cells_.find(l) == visited_cells_.end()) {
                 unvisited = l;
