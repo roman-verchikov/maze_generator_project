@@ -12,9 +12,6 @@ room_drawer::room_drawer(QWidget *w) : window_(w) {}
 
 void room_drawer::operator () (const wall_position_t &wall_pos)
 {
-    using std::min;
-    using std::max;
-
     const size_t widget_width = window_->width();
     const size_t widget_height = window_->height();
     const size_t num_rooms_x = current_maze::instance()->width();

@@ -2,11 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QButtonGroup>
+
 #include <memory>
 #include <vector>
 
 #include "maze_generator_factory.h"
-#include "gt_rb_interface.h"
 
 class maze;
 
@@ -29,6 +30,7 @@ private slots:
     void on_widthSpinBox_valueChanged(int arg1);
 
     void on_heightSpinBox_valueChanged(int arg1);
+    void on_rbToggle(bool checked);
 
 private:
     void generateMaze();
@@ -37,11 +39,7 @@ private:
 
     Ui::MainWindow *ui;
 
-    typedef std::vector<generator_type_radio_button_interface*> radio_buttons_vector;
-    typedef radio_buttons_vector::iterator radio_buttons_iterator;
-    typedef radio_buttons_vector::const_iterator radio_buttons_const_iterator;
-
-    radio_buttons_vector radioButtons;
+    QButtonGroup radioButtonsGroup;
 };
 
 #endif // MAINWINDOW_H

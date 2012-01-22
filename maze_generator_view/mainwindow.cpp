@@ -5,8 +5,6 @@
 
 #include "current_maze.h"
 #include "maze.h"
-#include "random_gt_rb.h"
-#include "dfs_gt_rb.h"
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -18,9 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui                  (new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    radioButtons.push_back(new random_generator_type_radio_button(ui->mazeGeneratorTypeGroupBox));
-    radioButtons.push_back(new dfs_generator_type_radio_button(ui->mazeGeneratorTypeGroupBox));
 
     addGeneratorTypeRadioButtons();
 }
@@ -46,31 +41,31 @@ void MainWindow::generateMaze()
                                  tr(ex.what()),
                                  QMessageBox::Ok);
     }
+
     this->ui->mazeDrawingWidget->update();
 }
 
 void MainWindow::addGeneratorTypeRadioButtons()
 {
-    std::for_each(radioButtons.begin(),
-                  radioButtons.end(),
-                  [&] (generator_type_radio_button_interface *i) {
-                      ui->verticalLayout->addWidget(i);
-                  });
+    const char *radioButtons[] = {
+        "Random",
+        "DFS"
+    };
+    const size_t radioButtonsLen = sizeof(radioButtons)/sizeof(*radioButtons);
 
-    radioButtons.front()->setChecked(true);
+    for(size_t i = 0; i < radioButtonsLen; ++i) {
+        QRadioButton *rb = new QRadioButton(radioButtons[i]);
+
+        connect(rb, SIGNAL(toggled(bool)), SLOT(on_rbToggle(bool)));
+
+        radioButtonsGroup.addButton(rb, i);
+        ui->verticalLayout->addWidget(rb);
+    }
 }
 
 maze_generator_type MainWindow::getSelectedGeneratorType() const
 {
-    typedef generator_type_radio_button_interface* radio_buttons_element;
-
-    radio_buttons_const_iterator selected = std::find_if(radioButtons.begin(),
-                                                         radioButtons.end(),
-                                                         [] (radio_buttons_element i) -> bool
-                                                         { return i->isChecked(); });
-
-    return (selected != radioButtons.end()) ? (*selected)->get_type() :
-                                              UNKNOWN_GENERATOR_TYPE;
+    return (maze_generator_type)radioButtonsGroup.checkedId();
 }
 
 void MainWindow::on_stepByStepCheckBox_toggled(bool checked)
@@ -88,6 +83,11 @@ void MainWindow::on_widthSpinBox_valueChanged(int)
 }
 
 void MainWindow::on_heightSpinBox_valueChanged(int)
+{
+    generateMaze();
+}
+
+void MainWindow::on_rbToggle(bool)
 {
     generateMaze();
 }
