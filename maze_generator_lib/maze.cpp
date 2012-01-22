@@ -240,7 +240,9 @@ void maze::goto_last_step()
 {
     prev_step_ = current_step_;
 
-    while (commands_.size() && current_step_ != commands_.size()-1) {
-        next_step();
+    if (!commands_.empty()) {
+        while (current_step_ != commands_.size()-1) {
+            next_step();
+        }
     }
 }

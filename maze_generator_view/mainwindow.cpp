@@ -47,6 +47,7 @@ void MainWindow::generateMaze()
 
 void MainWindow::addGeneratorTypeRadioButtons()
 {
+    // TODO: must be moved to specific class
     const char *radioButtons[] = {
         "Random",
         "DFS"
